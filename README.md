@@ -19,5 +19,7 @@ Online demo website is here (soon): http://2016.extend.xiligroup.org
 1. After decompressing "master" .zip from Github, only upload the folder twentysixteen-xili (near the readme.md) to themes folder , the child-theme files expect to be finally in `wp-content/themes/twentysixteen-xili/`!
 1. Before updating, don’t forget to backup your own `.mo` language files
 
+## First release for tests
+1. with 2016 version 01 shipped here https://wordpress.org/themes/twentysixteen/
 
 2015-09-01
