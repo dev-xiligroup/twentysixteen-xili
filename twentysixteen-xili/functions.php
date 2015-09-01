@@ -160,5 +160,25 @@ function twentysixteen_xili_add_widgets () {
 	register_widget( 'xili_Widget_Categories' ); // in xili-language-widgets.php since 2.16.3
 }
 
+function twentysixteen_xili_credits () {
+	/* translators: added in child functions by xili */
+	printf( __( 'Multilingual child theme of Twenty Sixteen by %1$s and %2$s', 'twentysixteen' ),
+		"<a href=\"http://dev.xiligroup.com\">dev.xiligroup</a>",
+		'<span class="site-copyright">' . get_theme_mod('copyright', __('My company','twentysixteen') ) . '</span>'
+		) ;
+}
+add_action ('twentysixteen_credits', 'twentysixteen_xili_credits');
+
+
+// Admin side
+// example with theme_mod_copyright in customizer (filter in xl 2.18.2)
+
+/**
+ * Customizer additions.
+ *
+ * @since
+ */
+require get_stylesheet_directory() . '/inc/customizer.php';
+
 
 ?>
