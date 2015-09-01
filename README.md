@@ -22,5 +22,6 @@ Online demo website is here (soon): http://2016.extend.xiligroup.org
 ## First release for tests
 1. with 2016 version 01 shipped here https://wordpress.org/themes/twentysixteen/
 1. includes example of added text as copyright in footer (see customizer) (needs functions and files in /js and /inc )
+1. latest version (in test) of xili-language is here https://github.com/dev-xiligroup/xili-language-plugin
 
 2015-09-01
