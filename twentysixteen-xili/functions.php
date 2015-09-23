@@ -31,7 +31,7 @@ function twentysixteen_xilidev_setup () {
 		// Args dedicated to this theme named Twenty Fifteen
 		$xili_args = array (
 			'customize_clone_widget_containers' => true, // comment or set to true to clone widget containers
-			'settings_name' => 'xili_2015_theme_options', // name of array saved in options table
+			'settings_name' => 'xili_2016_theme_options', // name of array saved in options table
 			'theme_name' => 'Twenty Sixteen',
 			'theme_domain' => $theme_domain,
 			'child_version' => TWENTYSIXTEEN_XILI_VER
@@ -160,6 +160,107 @@ function twentysixteen_xili_add_widgets () {
 	register_widget( 'xili_Widget_Categories' ); // in xili-language-widgets.php since 2.16.3
 }
 
+
+
+function twentysixteen_xili_header_image () {
+
+	$header_image_url = get_header_image();
+
+	$text_color = get_header_textcolor();
+
+	// If no custom options for text are set, let's bail.
+	if ( empty( $header_image_url ) )
+		return;
+
+	// If we get this far, we have custom styles.
+
+		if ( ! empty( $header_image_url ) ) :
+			$header_image_width = get_custom_header()->width; // default values
+			$header_image_height = get_custom_header()->height;
+			if ( class_exists ( 'xili_language' ) ) {
+				$xili_theme_options = get_theme_xili_options() ;
+				if ( isset ( $xili_theme_options['xl_header'] ) && $xili_theme_options['xl_header'] ) {
+				global $xili_language, $xili_language_theme_options ;
+				// check if image exists in current language
+				// 2013-10-10 - Tiago suggestion
+				$curlangslug = ( '' == the_curlang() ) ? strtolower( $xili_language->default_lang ) : the_curlang() ;
+
+
+					$headers = get_uploaded_header_images(); // search in uploaded header list
+
+					$this_default_headers = $xili_language_theme_options->get_processed_default_headers () ;
+					if ( ! empty( $this_default_headers ) ) {
+						$headers = array_merge( $this_default_headers, $headers );
+					}
+					foreach ( $headers as $header_key => $header ) {
+
+						if ( isset ( $xili_theme_options['xl_header_list'][$curlangslug] ) && $header_key == $xili_theme_options['xl_header_list'][$curlangslug] ) {
+							$header_image_url = $header['url'];
+
+							$header_image_width = ( isset($header['width']) ) ? $header['width']: get_custom_header()->width;
+							$header_image_height = ( isset($header['height']) ) ? $header['height']: get_custom_header()->height; // not in default (but in uploaded)
+
+							break ;
+						}
+					}
+				}
+			}
+	?>
+
+	<div class="header-image">
+		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+			<img src="<?php echo $header_image_url; ?>" width="<?php echo esc_attr($header_image_width); ?>" height="<?php echo esc_attr($header_image_height); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" />
+		</a>
+	</div>
+
+	<?php endif;
+}
+
+function twentysixteen_xilidev_setup_custom_header () {
+
+	// %2$s = in child
+	//
+
+	register_default_headers( array(
+		'xili2016' => array(
+
+			'url'			=> '%2$s/images/headers/xili2016-h1.jpg',
+			'thumbnail_url' => '%2$s/images/headers/xili2016-h1-thumb.jpg',
+			/* translators: added in child functions by xili */
+			'description'	=> _x( '2016 by xili', 'header image description', 'twentysixteen' )
+			),
+		'xili2016-2' => array(
+
+			'url'			=> '%2$s/images/headers/xili2016-h2.jpg',
+			'thumbnail_url' => '%2$s/images/headers/xili2016-h2-thumb.jpg',
+			/* translators: added in child functions by xili */
+			'description'	=> _x( '2016.2 by xili', 'header image description', 'twentysixteen' )
+			)
+		)
+	);
+
+	$args = array(
+		// Text color and image (empty to use none).
+		'default-text-color'	=> 'fffff0', // diff of parent
+		'default-image'			=> '%2$s/images/headers/xili2016-h1.jpg',
+
+		// Set height and width, with a maximum value for the width.
+		'height'				=> 280,
+		'width'					=> 1200,
+
+		// Callbacks for styling the header and the admin preview.
+		'wp-head-callback'			=> 'twentysixteen_header_style',
+		'admin-head-callback'		=> 'twentysixteen_admin_header_style',
+		'admin-preview-callback'	=> 'twentysixteen_admin_header_image',
+	);
+
+	add_theme_support( 'custom-header', $args ); // need 8 in add_action to overhide parent
+
+}
+add_action( 'after_setup_theme', 'twentysixteen_xilidev_setup_custom_header', 12 ); // 12 - child translation is active
+
+
+
 function twentysixteen_xili_credits () {
 	/* translators: added in child functions by xili */
 	printf( __( 'Multilingual child theme of Twenty Sixteen by %1$s and %2$s', 'twentysixteen' ),
@@ -179,6 +280,26 @@ add_action ('twentysixteen_credits', 'twentysixteen_xili_credits');
  * @since
  */
 require get_stylesheet_directory() . '/inc/customizer.php';
+
+/**
+ * test if JSON REST QUERY and dont insert lang tag after root url (permalinks class ) in wp_json links
+ *
+ */
+function xili_ccf_dont_insert_lang_tag_root ( $false, $url, $path, $orig_scheme, $blog_id ){
+	global $wp_query;
+		if ( isset( $wp_query->query_vars['post_type']) &&  $wp_query->query_vars['post_type'] == 'ccf_form' ) return true; // no insertion
+		/*
+		if ( is_admin() ) {
+			$screen = get_current_screen();
+			error_log( '------+++------- ' . serialize($wp_query->query_vars));
+			if ( $screen &&  $screen->base == "post") return true;
+		}
+		if ( isset( $wp_query->query_vars['json_route']) ) return true; // no insertion
+		*/
+		//error_log( $path . ' ----- ' . $url);
+		return $false;
+}
+add_filter('xili_json_dont_insert_lang_tag_root', 'xili_ccf_dont_insert_lang_tag_root', 10, 5 ); // filter since XL 2.16.6
 
 
 ?>
