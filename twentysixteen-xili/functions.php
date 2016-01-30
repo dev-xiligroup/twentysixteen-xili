@@ -1,13 +1,13 @@
 <?php
 // dev.xiligroup.com - msc - 2015-09-01 - first test with pre-release 0.1
 
-define( 'TWENTYSIXTEEN_XILI_VER', '0.1'); // as parent style.css
+define( 'TWENTYSIXTEEN_XILI_VER', '1.1'); // as parent style.css
 
 function twentysixteen_xilidev_setup () {
 
 	$theme_domain = 'twentysixteen';
 
-	$minimum_xl_version = '2.19.3'; // >
+	$minimum_xl_version = '2.21.0'; // >
 
 	$xl_required_version = false;
 
@@ -28,7 +28,7 @@ function twentysixteen_xilidev_setup () {
 		}
 
 		global $xili_language_theme_options ; // used on both side
-		// Args dedicated to this theme named Twenty Fifteen
+		// Args dedicated to this theme named Twenty Sixteen
 		$xili_args = array (
 			'customize_clone_widget_containers' => true, // comment or set to true to clone widget containers
 			'settings_name' => 'xili_2016_theme_options', // name of array saved in options table
@@ -160,8 +160,6 @@ function twentysixteen_xili_add_widgets () {
 	register_widget( 'xili_Widget_Categories' ); // in xili-language-widgets.php since 2.16.3
 }
 
-
-
 function twentysixteen_xili_header_image () {
 
 	$header_image_url = get_header_image();
@@ -247,11 +245,6 @@ function twentysixteen_xilidev_setup_custom_header () {
 		// Set height and width, with a maximum value for the width.
 		'height'				=> 280,
 		'width'					=> 1200,
-
-		// Callbacks for styling the header and the admin preview.
-		'wp-head-callback'			=> 'twentysixteen_header_style',
-		'admin-head-callback'		=> 'twentysixteen_admin_header_style',
-		'admin-preview-callback'	=> 'twentysixteen_admin_header_image',
 	);
 
 	add_theme_support( 'custom-header', $args ); // need 8 in add_action to overhide parent
@@ -280,26 +273,6 @@ add_action ('twentysixteen_credits', 'twentysixteen_xili_credits');
  * @since
  */
 require get_stylesheet_directory() . '/inc/customizer.php';
-
-/**
- * test if JSON REST QUERY and dont insert lang tag after root url (permalinks class ) in wp_json links
- *
- */
-function xili_ccf_dont_insert_lang_tag_root ( $false, $url, $path, $orig_scheme, $blog_id ){
-	global $wp_query;
-		if ( isset( $wp_query->query_vars['post_type']) &&  $wp_query->query_vars['post_type'] == 'ccf_form' ) return true; // no insertion
-		/*
-		if ( is_admin() ) {
-			$screen = get_current_screen();
-			error_log( '------+++------- ' . serialize($wp_query->query_vars));
-			if ( $screen &&  $screen->base == "post") return true;
-		}
-		if ( isset( $wp_query->query_vars['json_route']) ) return true; // no insertion
-		*/
-		//error_log( $path . ' ----- ' . $url);
-		return $false;
-}
-add_filter('xili_json_dont_insert_lang_tag_root', 'xili_ccf_dont_insert_lang_tag_root', 10, 5 ); // filter since XL 2.16.6
 
 
 ?>
