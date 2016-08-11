@@ -1,6 +1,6 @@
 <?php
 /**
- * The header for our theme.
+ * The template for displaying the header
  *
  * Displays all of the head element and everything up until the "site-content" div.
  *
@@ -8,6 +8,7 @@
  * @subpackage Twenty_Sixteen
  * @since Twenty Sixteen 1.0
  */
+
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?> class="no-js">
 <head>
@@ -34,6 +35,8 @@ if ( $is_safari && stripos($_SERVER['HTTP_USER_AGENT'], 'iPad') !== false) {
 		<header id="masthead" class="site-header" role="banner">
 			<div class="site-header-main">
 				<div class="site-branding">
+					<?php twentysixteen_the_custom_logo(); ?>
+
 					<?php if ( is_front_page() && is_home() ) : ?>
 						<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
 					<?php else : ?>
@@ -51,7 +54,7 @@ if ( $is_safari && stripos($_SERVER['HTTP_USER_AGENT'], 'iPad') !== false) {
 
 					<div id="site-header-menu" class="site-header-menu">
 						<?php if ( has_nav_menu( 'primary' ) ) : ?>
-							<nav id="site-navigation" class="main-navigation" role="navigation" aria-label='<?php _e( 'Primary Menu', 'twentysixteen' ); ?>'>
+							<nav id="site-navigation" class="main-navigation" role="navigation" aria-label="<?php esc_attr_e( 'Primary Menu', 'twentysixteen' ); ?>">
 								<?php
 									wp_nav_menu( array(
 										'theme_location' => 'primary',
@@ -62,7 +65,7 @@ if ( $is_safari && stripos($_SERVER['HTTP_USER_AGENT'], 'iPad') !== false) {
 						<?php endif; ?>
 
 						<?php if ( has_nav_menu( 'social' ) ) : ?>
-							<nav id="social-navigation" class="social-navigation" role="navigation" aria-label='<?php _e( 'Social Links Menu', 'twentysixteen' ); ?>'>
+							<nav id="social-navigation" class="social-navigation" role="navigation" aria-label="<?php esc_attr_e( 'Social Links Menu', 'twentysixteen' ); ?>">
 								<?php
 									wp_nav_menu( array(
 										'theme_location' => 'social',

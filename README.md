@@ -19,6 +19,9 @@ Online demo website is here : http://2016.extend.xiligroup.org
 1. After decompressing "master" .zip from Github, only upload the folder twentysixteen-xili (near the readme.md) to themes folder , the child-theme files expect to be finally in `wp-content/themes/twentysixteen-xili/`!
 1. Before updating, don’t forget to backup your own `.mo` language files
 
+## Third release for WP 4.5.3 - 4.6-rc2
+1. with 2016 version 1.2
+
 ## Second release for WP 4.4.1
 1. with 2016 version 1.1
 
@@ -27,4 +30,4 @@ Online demo website is here : http://2016.extend.xiligroup.org
 1. includes example of added text as copyright in footer (see customizer) (needs functions and files in /js and /inc )
 1. latest version (in test) of xili-language is here https://github.com/dev-xiligroup/xili-language-plugin
 
-2016-01-30
+2016-08-11

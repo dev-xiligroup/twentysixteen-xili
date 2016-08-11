@@ -166,15 +166,25 @@ function twentysixteen_xili_header_image () {
 
 	$text_color = get_header_textcolor();
 
-	// If no custom options for text are set, let's bail.
-	if ( empty( $header_image_url ) )
-		return;
-
 	// If we get this far, we have custom styles.
 
-		if ( ! empty( $header_image_url ) ) :
+	if (  $header_image_url ) {
+
+			/**
+			 * Filter the default twentysixteen custom header sizes attribute.
+			 *
+			 * @since Twenty Sixteen 1.0
+			 *
+			 * @param string $custom_header_sizes sizes attribute
+			 * for Custom Header. Default '(max-width: 709px) 85vw,
+			 * (max-width: 909px) 81vw, (max-width: 1362px) 88vw, 1200px'.
+			 */
+			$custom_header_sizes = apply_filters( 'twentysixteen_custom_header_sizes', '(max-width: 709px) 85vw, (max-width: 909px) 81vw, (max-width: 1362px) 88vw, 1200px' );
+
 			$header_image_width = get_custom_header()->width; // default values
 			$header_image_height = get_custom_header()->height;
+			$image_srcset_id = ( isset( get_custom_header()->attachment_id ) )  ? get_custom_header()->attachment_id  : 0 ;
+			$srcset = ""; // no in default
 			if ( class_exists ( 'xili_language' ) ) {
 				$xili_theme_options = get_theme_xili_options() ;
 				if ( isset ( $xili_theme_options['xl_header'] ) && $xili_theme_options['xl_header'] ) {
@@ -197,7 +207,8 @@ function twentysixteen_xili_header_image () {
 
 							$header_image_width = ( isset($header['width']) ) ? $header['width']: get_custom_header()->width;
 							$header_image_height = ( isset($header['height']) ) ? $header['height']: get_custom_header()->height; // not in default (but in uploaded)
-
+							$image_srcset_id = ( isset($header['attachment_id']) ) ? $header['attachment_id']: $image_srcset_id ;
+							$srcset = ( $image_srcset_id ) ? 'srcset="'. esc_attr( wp_get_attachment_image_srcset( $image_srcset_id ) ).'" ' : "" ;
 							break ;
 						}
 					}
@@ -207,11 +218,11 @@ function twentysixteen_xili_header_image () {
 
 	<div class="header-image">
 		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-			<img src="<?php echo $header_image_url; ?>" width="<?php echo esc_attr($header_image_width); ?>" height="<?php echo esc_attr($header_image_height); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" />
+			<img src="<?php echo $header_image_url; ?>" <?php echo $srcset; ?>" sizes="<?php echo esc_attr( $custom_header_sizes ); ?>" width="<?php echo esc_attr($header_image_width); ?>" height="<?php echo esc_attr($header_image_height); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" />
 		</a>
 	</div>
 
-	<?php endif;
+	<?php }
 }
 
 function twentysixteen_xilidev_setup_custom_header () {
