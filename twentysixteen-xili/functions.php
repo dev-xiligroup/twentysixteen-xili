@@ -1,7 +1,7 @@
 <?php
 // dev.xiligroup.com - msc - 2015-09-01 - first test with pre-release 0.1
 
-define( 'TWENTYSIXTEEN_XILI_VER', '1.1'); // as parent style.css
+define( 'TWENTYSIXTEEN_XILI_VER', '1.3'); // as parent style.css
 
 function twentysixteen_xilidev_setup () {
 
