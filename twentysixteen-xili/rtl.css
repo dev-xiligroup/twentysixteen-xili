@@ -1,0 +1,9 @@
+/*
+Theme Name: Twenty Sixteen
+Description: Adds support for languages written in a Right To Left (RTL) direction.
+It's easy, just a matter of overwriting all the horizontal positioning attributes
+of your CSS stylesheet in a separate stylesheet file named rtl.css.
+
+See: https://codex.wordpress.org/Right_to_Left_Language_Support
+*/
+@import url('../twentysixteen/rtl.css'); /* the most important line of the style.css of a child from his parent twentysixteen for RTL*/
