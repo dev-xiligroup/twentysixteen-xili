@@ -50,4 +50,3 @@ function twentysixteen_xili_customize_preview_js() {
 	wp_enqueue_script( 'twentysixteen-xili-customize-preview', get_stylesheet_directory_uri() . '/js/customize-preview.js', array( 'customize-preview' ), '20150901', true );
 }
 add_action( 'customize_preview_init', 'twentysixteen_xili_customize_preview_js' );
-?>
