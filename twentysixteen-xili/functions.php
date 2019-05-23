@@ -1,5 +1,5 @@
 <?php
-// dev.xiligroup.com - msc - 2019-05-22 - first implementation with WP 5.2
+// dev.xiligroup.com - msc - 2019-05-22 - first implementation with WP 5.2 and xl 2.23
 // dev.xiligroup.com - msc - 2015-09-01 - first test with pre-release 0.1
 
 define( 'TWENTYSIXTEEN_XILI_VER', '2.0' ); // as parent style.css
